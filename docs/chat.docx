@@ -1,0 +1,192 @@
+#!/usr/bin/env python3
+"""
+Gera um script SQL completo (CREATE DATABASE + CREATE TABLE + INSERT) a partir
+de uma pasta de CSVs — uma tabela por arquivo, nome da tabela = nome do arquivo.
+
+Os tipos NAO sao genericos: cada coluna e inspecionada linha a linha para
+decidir entre SMALLINT, INT, DECIMAL(p,s), TINYINT(1) e VARCHAR(n).
+Celulas vazias viram NULL de verdade, nao string vazia.
+
+Uso:
+    python3 gerar_sql.py --pasta ./analise --banco equipe_09 --saida equipe_09.sql
+"""
+
+import argparse
+import csv
+import re
+from decimal import Decimal, InvalidOperation
+from pathlib import Path
+
+BOOLEANOS = {"true", "false", "True", "False"}
+
+
+def nome_tabela(arquivo: Path) -> str:
+    """p01_panorama_mt_por_ano.csv -> p01_panorama_mt_por_ano"""
+    base = arquivo.stem.lower()
+    base = re.sub(r"[^a-z0-9_]", "_", base)
+    if base[0].isdigit():
+        base = "t_" + base
+    return base[:64]
+
+
+def nome_coluna(cabecalho: str) -> str:
+    col = cabecalho.lstrip("\ufeff").strip().lower()
+    col = re.sub(r"[^a-z0-9_]", "_", col)
+    col = re.sub(r"_+", "_", col).strip("_")
+    return (col or "coluna")[:64]
+
+
+def inferir_tipo(valores):
+    """Recebe todos os valores nao vazios de uma coluna e devolve o tipo SQL."""
+    if not valores:
+        return "VARCHAR(255)"
+
+    if all(v in BOOLEANOS for v in valores):
+        return "TINYINT(1)"
+
+    # inteiro?
+    if all(re.fullmatch(r"-?\d+", v) for v in valores):
+        maior = max(abs(int(v)) for v in valores)
+        if maior <= 32767:
+            return "SMALLINT"
+        if maior <= 2147483647:
+            return "INT"
+        return "BIGINT"
+
+    # decimal? precisao e escala exatas, nunca FLOAT (percentual nao pode
+    # chegar em 12.299999999 no relatorio)
+    if all(re.fullmatch(r"-?\d*\.?\d+([eE][-+]?\d+)?", v) for v in valores):
+        try:
+            decimais = [Decimal(v) for v in valores]
+        except InvalidOperation:
+            pass
+        else:
+            escala = max(-d.as_tuple().exponent for d in decimais)
+            escala = max(0, min(escala, 10))
+            inteiros = max(len(str(abs(int(d)))) for d in decimais)
+            # +1 digito inteiro de folga: se o CSV for regerado e um
+            # percentual passar de 99.99, DECIMAL(4,2) estouraria
+            precisao = min(inteiros + 1 + escala, 30)
+            return f"DECIMAL({precisao},{escala})"
+
+    tamanho = max(len(v) for v in valores)
+    if tamanho <= 255:
+        # folga de 20% para nao estourar se o CSV for regerado
+        return f"VARCHAR({min(255, max(10, int(tamanho * 1.2) + 1))})"
+    return "TEXT"
+
+
+# colunas que valem indice: sao as que o dashboard filtra o tempo todo
+CANDIDATAS_INDICE = {
+    "nu_ano_censo", "ano", "coorte", "rede", "modalidade",
+    "grau_academico", "co_curso", "co_ies", "cpc_faixa", "uf", "sg_uf",
+}
+
+
+def escapar(valor: str) -> str:
+    if valor == "":
+        return "NULL"
+    if valor in BOOLEANOS:
+        return "1" if valor.lower() == "true" else "0"
+    if re.fullmatch(r"-?\d+(\.\d+)?", valor):
+        return valor
+    escapado = (
+        valor.replace("\\", "\\\\")
+        .replace("'", "\\'")
+        .replace("\n", "\\n")
+        .replace("\r", "")
+    )
+    return f"'{escapado}'"
+
+
+def ler_csv(arquivo: Path):
+    with arquivo.open("r", encoding="utf-8-sig", newline="") as f:
+        leitor = csv.reader(f)
+        linhas = list(leitor)
+    if not linhas:
+        return [], []
+    return [nome_coluna(c) for c in linhas[0]], linhas[1:]
+
+
+def gerar(pasta: Path, banco: str, saida: Path, lote: int = 200):
+    arquivos = sorted(pasta.glob("*.csv"))
+    if not arquivos:
+        raise SystemExit(f"Nenhum CSV encontrado em {pasta}")
+
+    partes = [
+        "-- Gerado por gerar_sql.py",
+        f"-- Origem: {pasta}",
+        f"-- {len(arquivos)} arquivos CSV",
+        "",
+        "SET NAMES utf8mb4;",
+        f"DROP DATABASE IF EXISTS `{banco}`;",
+        f"CREATE DATABASE `{banco}` "
+        "CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;",
+        f"USE `{banco}`;",
+        "",
+    ]
+
+    total_linhas = 0
+
+    for arquivo in arquivos:
+        tabela = nome_tabela(arquivo)
+        colunas, linhas = ler_csv(arquivo)
+        if not colunas:
+            print(f"  ! {arquivo.name}: vazio, pulado")
+            continue
+
+        tipos = []
+        for i, _ in enumerate(colunas):
+            valores = [l[i].strip() for l in linhas if i < len(l) and l[i].strip() != ""]
+            tipos.append(inferir_tipo(valores))
+
+        partes.append(f"-- {arquivo.name} ({len(linhas)} linhas)")
+        partes.append(f"CREATE TABLE `{tabela}` (")
+        definicoes = ["  `id` INT NOT NULL AUTO_INCREMENT"]
+        definicoes += [f"  `{c}` {t}" for c, t in zip(colunas, tipos)]
+        definicoes.append("  PRIMARY KEY (`id`)")
+        for col in colunas:
+            if col in CANDIDATAS_INDICE:
+                definicoes.append(f"  KEY `idx_{tabela[:40]}_{col}` (`{col}`)")
+        partes.append(",\n".join(definicoes))
+        partes.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 "
+                      "COLLATE=utf8mb4_unicode_ci;")
+        partes.append("")
+
+        lista_colunas = ", ".join(f"`{c}`" for c in colunas)
+        for inicio in range(0, len(linhas), lote):
+            bloco = linhas[inicio:inicio + lote]
+            valores = []
+            for linha in bloco:
+                linha = list(linha) + [""] * (len(colunas) - len(linha))
+                valores.append("(" + ", ".join(escapar(v.strip()) for v in linha[:len(colunas)]) + ")")
+            partes.append(f"INSERT INTO `{tabela}` ({lista_colunas}) VALUES")
+            partes.append(",\n".join(valores) + ";")
+        partes.append("")
+        total_linhas += len(linhas)
+        print(f"  OK {tabela}: {len(linhas)} linhas, {len(colunas)} colunas")
+
+    # query de conferencia no fim, para validar a carga na hora
+    partes.append("-- Conferencia da carga")
+    partes.append(
+        "SELECT TABLE_NAME, TABLE_ROWS FROM information_schema.TABLES\n"
+        f"  WHERE TABLE_SCHEMA = '{banco}' ORDER BY TABLE_NAME;"
+    )
+    partes.append("")
+
+    saida.write_text("\n".join(partes), encoding="utf-8")
+    tamanho = saida.stat().st_size / 1024
+    print(f"\n{saida} gerado: {len(arquivos)} tabelas, "
+          f"{total_linhas} linhas, {tamanho:.0f} KB")
+    print(f"Para carregar:  mysql -u root -p < {saida.name}")
+
+
+if __name__ == "__main__":
+    p = argparse.ArgumentParser(description="Gera SQL a partir de uma pasta de CSVs")
+    p.add_argument("--pasta", default="./analise", type=Path)
+    p.add_argument("--banco", default="equipe_09")
+    p.add_argument("--saida", default="equipe_09.sql", type=Path)
+    p.add_argument("--lote", default=200, type=int,
+                   help="linhas por INSERT (padrao 200)")
+    a = p.parse_args()
+    gerar(a.pasta, a.banco, a.saida, a.lote)
