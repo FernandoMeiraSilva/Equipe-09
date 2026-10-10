@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trajetória na graduação em Mato Grosso</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout" id="layout">
+  <div class="lateral">
+    <div class="marca">Trajetória</div>
+    <div class="perfil">
+      <div class="avatar" id="perfil-avatar"></div>
+      <div id="perfil-nome"></div>
+    </div>
+    <div class="menu" id="menu"></div>
+  </div>
+
+  <div class="principal">
+    <div class="barra">
+      <button class="barra-botao" id="alternar-menu" type="button" aria-label="Alternar menu">☰</button>
+      <div class="busca">
+        <input id="busca" type="search" placeholder="Buscar curso">
+        <div class="busca-icone">⌕</div>
+      </div>
+      <div class="barra-direita">
+        <div class="alerta">✉</div>
+        <div class="alerta">⚑<div class="alerta-contador" id="alerta-contador"></div></div>
+        <div class="usuario">
+          <div class="avatar" id="usuario-avatar"></div>
+          <div class="usuario-nome" id="usuario-nome"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="conteudo">
+      <div class="cartao cabecalho">
+        <div>
+          <div class="cabecalho-titulo">Trajetória na graduação em <span id="estado"></span></div>
+          <div class="trilha">Dashboard / <span id="trilha-atual">Visão geral</span></div>
+        </div>
+        <div class="selo" id="origem" title="Indicadores calculados a partir do dump dump-equipe_09-202610101642.sql."></div>
+      </div>
+
+      <div class="painel ativo" id="painel-visao">
+        <div class="kpis" id="kpis"></div>
+        <div class="grade" id="grade-visao"></div>
+      </div>
+      <div class="painel" id="painel-qualidade"><div class="grade" id="grade-qualidade"></div></div>
+      <div class="painel" id="painel-redes"><div class="grade" id="grade-redes"></div></div>
+      <div class="painel" id="painel-bonus"><div class="grade" id="grade-bonus"></div></div>
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
