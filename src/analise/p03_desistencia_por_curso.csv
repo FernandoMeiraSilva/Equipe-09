@@ -1,0 +1,109 @@
+﻿no_cine_rotulo,ingressantes,desistiram,concluiram,cursos,pct_desistiu,pct_concluiu
+Segurança pública,33,33,0,1,100.00,0.00
+Eletrotécnica industrial,181,163,9,2,90.06,4.97
+Engenharia ambiental,716,601,112,3,83.94,15.64
+Ciências aeronáuticas,553,453,98,2,81.92,17.72
+Fotografia,259,208,51,1,80.31,19.69
+Agronegócio,822,645,177,4,78.47,21.53
+Biocombustíveis,107,83,24,1,77.57,22.43
+Gestão da qualidade,74,57,17,1,77.03,22.97
+Engenharia de produção,2224,1699,484,13,76.39,21.76
+Educação física,4442,3313,1055,14,74.58,23.75
+Geoprocessamento,162,120,23,1,74.07,14.20
+Moda,240,177,62,1,73.75,25.83
+Segurança no trabalho,53,39,14,1,73.58,26.42
+Construção de edifícios,270,198,48,1,73.33,17.78
+Gestão financeira,268,196,72,3,73.13,26.87
+Gestão comercial,829,601,228,4,72.50,27.50
+Redes de computadores,853,613,194,7,71.86,22.74
+Radiologia,1080,770,308,3,71.30,28.52
+Ciências naturais formação de professor,286,203,58,2,70.98,20.28
+Engenharia mecânica,2328,1636,464,8,70.27,19.93
+Automação industrial,416,288,81,3,69.23,19.47
+Gestão da produção,162,111,50,2,68.52,30.86
+Estética e cosmética,3127,2139,978,12,68.40,31.28
+Agrocomputação,148,100,42,2,67.57,28.38
+Engenharia elétrica,2859,1925,658,10,67.33,23.02
+Sistemas de informação,4501,2995,997,26,66.54,22.15
+Matemática formação de professor,2617,1735,395,10,66.30,15.09
+Publicidade e propaganda,1056,697,276,5,66.00,26.14
+Fisioterapia,8290,5461,2642,17,65.87,31.87
+Design de interiores,508,332,176,2,65.35,34.65
+Agroindústria,239,156,52,3,65.27,21.76
+Administração,14202,9265,3890,50,65.24,27.39
+Arquitetura e urbanismo,5436,3542,1611,16,65.16,29.64
+Engenharia civil,12325,7974,3819,27,64.70,30.99
+Engenharia de computação,1164,745,174,4,64.00,14.95
+Biomedicina,3659,2337,1274,14,63.87,34.82
+Direito,45761,29032,15205,59,63.44,33.23
+Gestão de negócios,298,189,93,4,63.42,31.21
+Logística,576,365,194,5,63.37,33.68
+Contabilidade,13458,8485,4209,41,63.05,31.28
+Ciência da computação,2248,1417,430,10,63.03,19.13
+Engenharia de controle e automação,1214,764,195,5,62.93,16.06
+Engenharia de alimentos,860,535,214,6,62.21,24.88
+Marketing,504,313,190,3,62.10,37.70
+Psicologia,10293,6349,3434,27,61.68,33.36
+Gestão de pessoas,3613,2223,1337,18,61.53,37.01
+Enfermagem,11810,7247,3854,32,61.36,32.63
+Letras português inglês formação de professor,1166,714,322,6,61.23,27.62
+Nutrição,4217,2557,1518,14,60.64,36.00
+Jornalismo,1375,831,367,7,60.44,26.69
+Gestão do agronegócio,1420,842,546,7,59.30,38.45
+Biotecnologia,142,84,27,1,59.15,19.01
+Comércio exterior,168,98,70,1,58.33,41.67
+Física formação de professor,1123,651,162,6,57.97,14.43
+Serviço social,1330,769,391,6,57.82,29.40
+Gastronomia,1665,954,711,3,57.30,42.70
+Fonoaudiologia,194,111,78,1,57.22,40.21
+Física,380,216,51,1,56.84,13.42
+Educação física formação de professor,3866,2187,1239,19,56.57,32.05
+Agronomia,13143,7409,4386,29,56.37,33.37
+Controle de obras,246,138,35,1,56.10,14.23
+Teologia,250,140,106,2,56.00,42.40
+Química formação de professor,1033,574,205,5,55.57,19.85
+Turismo,765,424,211,4,55.42,27.58
+Letras português francês formação de professor,119,65,22,1,54.62,18.49
+Engenharia florestal,1445,779,319,5,53.91,22.08
+Gestão ambiental,410,220,153,2,53.66,37.32
+Gestão pública,946,506,364,6,53.49,38.48
+Geografia,325,172,61,1,52.92,18.77
+Ciências sociais,189,100,21,1,52.91,11.11
+Farmácia,4657,2461,1978,16,52.85,42.47
+Economia,1657,874,359,3,52.75,21.67
+Biologia,761,401,237,5,52.69,31.14
+Biologia formação de professor,3037,1582,792,14,52.09,26.08
+Pedagogia,8271,4263,3634,33,51.54,43.94
+Sistemas para internet,164,84,36,1,51.22,21.95
+Manejo da produção agrícola,123,63,40,1,51.22,32.52
+Geografia formação de professor,1643,823,426,7,50.09,25.93
+Letras português espanhol formação de professor,298,148,99,5,49.66,33.22
+Filosofia,161,79,24,1,49.07,14.91
+História formação de professor,1275,622,361,3,48.78,28.31
+Filosofia formação de professor,469,228,164,3,48.61,34.97
+Engenharia de transportes,346,164,56,1,47.40,16.18
+Alimentos,511,242,102,2,47.36,19.96
+Letras português formação de professor,1941,917,638,8,47.24,32.87
+Ciências sociais formação de professor,181,85,28,1,46.96,15.47
+Química,350,163,93,1,46.57,26.57
+Música formação de professor,108,50,17,1,46.30,15.74
+Saúde coletiva,497,221,109,1,44.47,21.93
+"Rádio, TV e internet",87,38,48,1,43.68,55.17
+Medicina veterinária,2326,1009,1061,5,43.38,45.61
+Odontologia,4757,2036,2563,13,42.80,53.88
+Gestão da tecnologia da informação,232,98,125,2,42.24,53.88
+Engenharia de minas,256,107,51,1,41.80,19.92
+Zootecnia,2565,1057,793,10,41.21,30.92
+Engenharia agrícola,872,348,241,2,39.91,27.64
+Letras inglês formação de professor,149,58,53,1,38.93,35.57
+Engenharia ambiental e sanitária,381,145,100,1,38.06,26.25
+Engenharia química,330,124,98,1,37.58,29.70
+Estatística,376,137,51,1,36.44,13.56
+Biblioteconomia,163,53,47,1,32.52,28.83
+Secretariado,381,111,132,1,29.13,34.65
+Gestão de cooperativas,63,18,44,1,28.57,69.84
+Geologia,241,66,97,1,27.39,40.25
+Medicina,3267,618,1852,7,18.92,56.69
+Cinema e audiovisual,84,12,25,1,14.29,29.76
+Letras língua brasileira de sinais formação de professor,184,22,89,1,11.96,48.37
+Educação indígena formação de professor,115,11,104,2,9.57,90.43

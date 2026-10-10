@@ -1,0 +1,9 @@
+﻿modalidade,faixa_cobertura,cursos,vinculos,desvinculados,cobertura_media_pct,taxa_evasao_pct
+EAD,Sem apoio (0%),275,106517,31565,0.00,29.63
+EAD,Baixa (ate 5%),141,148108,41364,2.78,27.93
+EAD,Media (5-15%),99,53879,13883,7.68,25.77
+EAD,Alta (acima de 15%),19,3165,624,19.17,19.72
+Presencial,Sem apoio (0%),166,37907,4756,0.00,12.55
+Presencial,Baixa (ate 5%),125,38874,4356,2.75,11.21
+Presencial,Media (5-15%),198,91994,15776,9.80,17.15
+Presencial,Alta (acima de 15%),186,141437,27591,24.93,19.51

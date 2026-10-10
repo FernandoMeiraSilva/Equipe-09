@@ -1,0 +1,5 @@
+﻿faixa_cobertura,cursos,vinculos,matriculas,desvinculados,trancados,cobertura_media_pct,taxa_evasao_pct,taxa_trancamento_pct
+Sem apoio (0%),441,144424,80075,36321,16844,0.00,25.15,11.66
+Baixa (ate 5%),266,186982,115323,45720,12048,2.77,24.45,6.44
+Media (5-15%),297,145873,88395,29659,12129,8.73,20.33,8.31
+Alta (acima de 15%),205,144602,86292,28215,12356,24.49,19.51,8.54

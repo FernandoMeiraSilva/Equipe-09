@@ -1,0 +1,9 @@
+﻿modalidade,faixa_financ,cursos,vinculos,desvinculados,pct_financ_medio,taxa_evasao_pct
+EAD,Q1 menos financiado,127,55354,14371,1.08,25.96
+EAD,Q2,97,65540,17767,24.12,27.11
+EAD,Q3,102,85994,27376,56.69,31.83
+EAD,Q4 mais financiado,110,104781,27922,92.72,26.65
+Presencial,Q1 menos financiado,176,56274,6777,1.02,12.04
+Presencial,Q2,278,116026,17422,19.00,15.02
+Presencial,Q3,180,116772,24980,59.04,21.39
+Presencial,Q4 mais financiado,55,21140,3300,94.21,15.61
