@@ -11,7 +11,6 @@ Esta fase inicial estabelece os fundamentos estratégicos e estruturais do proje
 
 ### 1.2 Escolha da Tecnologia de Armazenamento (Repositório Relacional)
 * **Adoção do MariaDB:** Selecionado especificamente pela sua alta eficiência e robustez na gestão de ingestão massiva de dados relacionais.
-* **Garantia de Idempotência (`UPSERT`):** Implementação de restrições rígidas baseadas em chaves únicas compostas (ex.: $\text{ID\_ALUNO} + \text{ANO\_CENSO}$), assegurando que o processo utilize instruções do tipo *INSERT ON DUPLICATE KEY UPDATE*. Isso permite atualizar registros existentes sem gerar duplicidade em reprocessamentos.
 
 ### 1.3 Arquitetura de Camadas e Processamento
 * **Processamento de Alta Volumetria:** Manipulação de ficheiros compactados (`.ZIP` e `.CSV`) contendo milhões de registos do ensino superior utilizando **Python** em conjunto com a biblioteca **Pandas** para filtragem e tratamento avançado.
